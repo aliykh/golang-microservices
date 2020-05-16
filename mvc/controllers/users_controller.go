@@ -20,7 +20,7 @@ func GetUsers(c *gin.Context){
 		 Code:    http.StatusBadRequest,
 		 Message: fmt.Sprintf("user id must be a number = %v", queryParam),
 	 }
-		c.JSON(appErr.Code, appErr)
+		utils.RespondAppError(c, &appErr)
 		return
 	}
 
@@ -28,12 +28,11 @@ func GetUsers(c *gin.Context){
 	user, appErr := services.UserService.GetUser(userId)
 
 	if appErr != nil {
-		c.JSON(appErr.Code, appErr)
+		utils.RespondAppError(c, appErr)
 		return
 	}
 
 
 	//	Return to the client
-	c.JSON(http.StatusOK, user)
-
+	utils.Respond(c, http.StatusOK, user)
 }
