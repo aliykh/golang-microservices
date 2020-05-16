@@ -27,7 +27,7 @@ func GetUsers(resp http.ResponseWriter, req *http.Request){
 	}
 
 
-	user, applicationError := services.GetUser(userId)
+	user, applicationError := services.UserService.GetUser(userId)
 
 	if applicationError != nil {
 		// handle user get function error -> return bad request

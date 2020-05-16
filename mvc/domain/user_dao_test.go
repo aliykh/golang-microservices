@@ -6,9 +6,15 @@ import (
 	"testing"
 )
 
+
+func init() {
+	UserDaoInterface = &userDao{}
+}
+
+
 func TestGetUserNil(t *testing.T) {
 
-	user, err := GetUser(0)
+	user, err := UserDaoInterface.GetUser(0)
 
 	assert.NotNil(t,  err)
 	assert.Nil(t, user, "User with given id = 0 does not exist")
@@ -21,7 +27,7 @@ func TestGetUserNil(t *testing.T) {
 
 func TestGetUser(t *testing.T) {
 
-	user, err := GetUser(123)
+	user, err := UserDaoInterface.GetUser(123)
 
 	assert.Nil(t, err)
 	assert.NotNil(t, user)

@@ -3,6 +3,7 @@ package domain
 import (
 	"fmt"
 	"github.com/aliykh/golang-microservices/mvc/utils"
+	"log"
 	"net/http"
 )
 
@@ -14,9 +15,22 @@ var (
 			LastName:  "LastName-123",
 		},
 	}
+
+	UserDaoInterface userDaoInterface
 )
 
-func GetUser(userId int64) (*User, *utils.ApplicationError) {
+type userDaoInterface interface {
+	GetUser(userId int64) (*User, *utils.ApplicationError)
+}
+
+func init() {
+	UserDaoInterface = &userDao{}
+}
+
+type userDao struct {}
+
+func (u *userDao) GetUser(userId int64) (*User, *utils.ApplicationError) {
+	log.Println("Accessing User DAO Layer")
 	if user, ok := users[userId]; ok {
 		return user, nil
 	}
