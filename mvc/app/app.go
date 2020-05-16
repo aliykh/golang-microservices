@@ -1,17 +1,22 @@
 package app
 
 import (
-	"github.com/aliykh/golang-microservices/mvc/controllers"
-	"net/http"
+	"github.com/gin-gonic/gin"
 )
 
-func StartApp(){
-	http.HandleFunc("/hello", func(writer http.ResponseWriter, request *http.Request) {
-		_, _ = writer.Write([]byte("it is working fine"))
-	})
-	http.HandleFunc("/user", controllers.GetUsers)
+var (
+	engine *gin.Engine
+)
 
-	err := http.ListenAndServe(":8083", nil)
+func init() {
+	engine = gin.Default()
+}
+
+func StartApp(){
+
+	HandleMapping()
+
+	err := engine.Run(":8083")
 	if err != nil {
 		panic(err)
 	}
